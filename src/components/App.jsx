@@ -12,7 +12,8 @@ export class App extends Component {
   state = {
     contacts: [],
     filter: '',
-
+    // name: name,
+    // number: number,
   }
 
   onInputChange = event => {
@@ -27,7 +28,6 @@ export class App extends Component {
       number: number,
       id: nanoid()
     };
-
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact]
     }));
@@ -41,10 +41,8 @@ export class App extends Component {
   onFilterContact = (event) => {
     const inputFilterValue = event.target.value;
     this.setState({ filter: inputFilterValue });
-
-
-    console.log('3333')
   }
+
   render() {
     const filtered = this.state.contacts.filter((contact) => {
       return (
@@ -53,8 +51,6 @@ export class App extends Component {
           .includes(this.state.filter.trim().toLowerCase()) ||
         contact.number.includes(this.state.filter)
       );
-
-
     })
     return (
       <div style={{
@@ -73,16 +69,11 @@ export class App extends Component {
               number={this.state.number}
               onInputChange={this.onInputChange}
             />
-
             <Filter
               onChange={this.onFilterContact}
               filterList={filtered}
-
-
             />
             <Contacts
-
-              // contacts={this.state.contacts}
               contacts={filtered}
               onDeleteContact={this.onDeleteContact}
             />
@@ -92,5 +83,4 @@ export class App extends Component {
     )
   }
 }
-
 
