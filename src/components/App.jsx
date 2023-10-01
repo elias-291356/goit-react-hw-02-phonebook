@@ -1,6 +1,6 @@
 
 import 'bulma/css/bulma.css';
-
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { Filter } from './Filter/Filter';
@@ -20,19 +20,29 @@ export class App extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
+
   handleSubmit = (event) => {
     event.preventDefault();
     const { name, number } = this.state;
-    const newContact = {
-      name: name,
-      number: number,
-      id: nanoid()
-    };
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact]
-    }));
-    this.setState({ name: '', number: '' })
-  }
+
+    if (this.state.contacts.some((contact) => contact.name === name)) {
+      Notify.warning(`A contact named "${name}" already exists. `)
+
+    } else {
+      const newContact = {
+        name: name,
+        number: number,
+        id: nanoid(),
+      };
+
+      this.setState((prevState) => ({
+        contacts: [...prevState.contacts, newContact],
+        name: '',
+        number: '',
+      }));
+    }
+  };
   onDeleteContact = (id) => {
     this.setState({
       contacts: this.state.contacts.filter(contact => contact.id !== id)
@@ -63,21 +73,21 @@ export class App extends Component {
       }}>
         <form onSubmit={this.handleSubmit} className='box ' >
           <h2 className="subtitle is-1">Phonebook</h2>
-          <ul className="listForm" >
-            <PhonebookItem
-              name={this.state.name}
-              number={this.state.number}
-              onInputChange={this.onInputChange}
-            />
-            <Filter
-              onChange={this.onFilterContact}
-              filterList={filtered}
-            />
-            <Contacts
-              contacts={filtered}
-              onDeleteContact={this.onDeleteContact}
-            />
-          </ul>
+
+          <PhonebookItem
+            name={this.state.name}
+            number={this.state.number}
+            onInputChange={this.onInputChange}
+          />
+          <Filter
+            onChange={this.onFilterContact}
+            filterList={filtered}
+          />
+          <Contacts
+            contacts={filtered}
+            onDeleteContact={this.onDeleteContact}
+          />
+
         </form>
       </div>
     )
