@@ -9,10 +9,9 @@ export class Phonebook extends Component {
     name: '',
     number: '',
   }
-  // onInputChange = event => {
-  //   const { number, name, value } = event.target
-  //   this.setState({ [name]: value, [number]: value })
-  // };
+
+
+
   onInputChange = event => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -35,64 +34,87 @@ export class Phonebook extends Component {
 
   }
 
-  handleChange = (event) => {
-    const { filter } = this.state;
-    this.setState({ filter: '' })
+  deleteContactListByInputClick = (deleteContact) => {
+    this.setState({ name: '', number: '' })
+  }
+
+
+  onDeleteContact = (id) => {
+    this.setState({
+      contacts: this.state.contacts.filter(contact => contact.id !== id)
+    })
+  }
+
+
+  renderContacts() {
+    return (
+      <ul>
+        {this.state.contacts.map(contact => (
+          <li key={contact.id} className="added-contact">
+            <p className="subtitle is-5 added-contact-item"> {contact.name} {contact.number}</p>
+            <button onClick={() => this.onDeleteContact(contact.id)} type="button" className="button is-danger is-light ">Delete</button>
+          </li>
+        ))}
+      </ul>
+    );
   }
 
 
 
   render() {
     return (
-
-      <form onSubmit={this.handleSubmit} className='box ' >
-        <h2 className="subtitle is-1">Phonebook</h2>
-        <ul className="listForm" >
-          <li>
-            <label label className="label" >Name</label>
-            <input
-              placeholder="Your name"
-              className="input is-success"
-              type="text"
-              name="name"
-              maxlength="20"
-              required
-              value={this.state.name}
-              onChange={this.onInputChange}
-            />
-            <label label className="label">Number</label>
-            <input
-              placeholder="+380"
-              className="input is-success"
-              type="number"
-              name="number"
-              maxlength="20"
-              required
-              value={this.state.number}
-              onChange={this.onInputChange}
-            />
-            <button className="button is-primary"
-              type="submit"  >Add contact</button>
-          </li>
-        </ul>
-
-        <form className="ListContactsForm"  >
-          <h2 className="subtitle is-1">Contacts</h2>
-          <label className="label" >Find contact by name</label>
-          <input
-            class="input is-success"
-            type="tel"
-            name="filter"
-            required
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-          <ul>
-            <li className="subtitle is-4" >Nellie Steele</li>
+      <div>
+        <form onSubmit={this.handleSubmit} className='box ' >
+          <h2 className="subtitle is-1">Phonebook</h2>
+          <ul className="listForm" >
+            <li>
+              <label label className="label" >Name</label>
+              <input
+                placeholder="Your name"
+                className="input is-success"
+                type="text"
+                name="name"
+                maxlength="20"
+                required
+                value={this.state.name}
+                onChange={this.onInputChange}
+              />
+              <label label className="label">Number</label>
+              <input
+                placeholder="+380"
+                className="input is-success"
+                type="number"
+                name="number"
+                maxlength="20"
+                required
+                value={this.state.number}
+                onChange={this.onInputChange}
+              />
+              <button className="button is-primary"
+                type="submit"  >Add contact</button>
+            </li>
           </ul>
 
+          <form className="ListContactsForm"  >
+            <div className="ListContactsForm">
+              <h2 className="subtitle is-1">Contacts</h2>
+              <label className="label">Find contact by name</label>
+              <input
+                className="input is-success"
+                type="text"
+                name="filter"
+                required
+
+              // ... обработчик для фильтрации, если необходимо
+              />
+              {this.renderContacts()}
+            </div>
+
+
+          </form>
         </form>
-      </form>
+      </div>
+
 
 
     )
