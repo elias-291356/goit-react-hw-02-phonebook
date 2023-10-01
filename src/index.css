@@ -26,3 +26,10 @@ code {
 .added-contact-item {
   margin-bottom: 0px !important;
 }
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 10px;
+}

@@ -1,5 +1,6 @@
 
 import 'bulma/css/bulma.css';
+
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { Filter } from './Filter/Filter';
@@ -11,8 +12,7 @@ export class App extends Component {
   state = {
     contacts: [],
     filter: '',
-    // name: '',
-    // number: '',
+
   }
 
   onInputChange = event => {
@@ -38,16 +38,24 @@ export class App extends Component {
       contacts: this.state.contacts.filter(contact => contact.id !== id)
     })
   }
-  onFilterContact = (filterText) => {
-    const lowerCaseFilter = filterText.toLowerCase();
-    this.setState({
-      contacts: this.state.contacts.filter(contact => {
-        const lowerCaseName = contact.name.toLowerCase();
-        return lowerCaseName.includes(lowerCaseFilter);
-      })
-    });
+  onFilterContact = (event) => {
+    const inputFilterValue = event.target.value;
+    this.setState({ filter: inputFilterValue });
+
+
+    console.log('3333')
   }
   render() {
+    const filtered = this.state.contacts.filter((contact) => {
+      return (
+        contact.name
+          .toLowerCase()
+          .includes(this.state.filter.trim().toLowerCase()) ||
+        contact.number.includes(this.state.filter)
+      );
+
+
+    })
     return (
       <div style={{
         height: '100vh',
@@ -68,9 +76,14 @@ export class App extends Component {
 
             <Filter
               onChange={this.onFilterContact}
+              filterList={filtered}
+
+
             />
             <Contacts
-              contacts={this.state.contacts}
+
+              // contacts={this.state.contacts}
+              contacts={filtered}
               onDeleteContact={this.onDeleteContact}
             />
           </ul>
