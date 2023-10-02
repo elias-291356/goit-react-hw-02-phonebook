@@ -1,7 +1,7 @@
 export function Filter({ onChange, value }) {
   return (
 
-    <form  >
+    <div  >
       <h2 className="subtitle is-1">Contacts</h2>
       <label className="label">Find contact by name</label>
       <input
@@ -10,6 +10,6 @@ export function Filter({ onChange, value }) {
         required
         value={value}
       />
-    </form>
+    </div>
   )
 }

@@ -12,8 +12,7 @@ export class App extends Component {
   state = {
     contacts: [],
     filter: '',
-    // name: name,
-    // number: number,
+
   }
 
   onInputChange = event => {
@@ -71,13 +70,14 @@ export class App extends Component {
         fontSize: 40,
         color: '#010101'
       }}>
-        <form onSubmit={this.handleSubmit} className='box ' >
-          <h2 className="subtitle is-1">Phonebook</h2>
 
+
+        <form onSubmit={this.handleSubmit} className='box ' >
           <PhonebookItem
             name={this.state.name}
             number={this.state.number}
             onInputChange={this.onInputChange}
+            handleSubmit={this.handleSubmit}
           />
           <Filter
             onChange={this.onFilterContact}
@@ -87,9 +87,9 @@ export class App extends Component {
             contacts={filtered}
             onDeleteContact={this.onDeleteContact}
           />
+        </form >
 
-        </form>
-      </div>
+      </div >
     )
   }
 }
