@@ -41,7 +41,7 @@ export class PhonebookItem extends Component {
     const { name, number } = this.state;
 
     return (
-      <div>
+      <form onSubmit={this.handleSubmit} >
         <h2 className="subtitle is-1">Phonebook</h2>
 
         <label className="label">Name</label>
@@ -69,8 +69,8 @@ export class PhonebookItem extends Component {
         <button className="button is-primary" type="submit" onClick={this.handleSubmit}>
           Add contact
         </button>
+      </form>
 
-      </div>
     );
   }
 }

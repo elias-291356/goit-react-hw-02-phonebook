@@ -56,7 +56,7 @@ export class App extends Component {
           color: '#010101',
         }}
       >
-        <form onSubmit={this.handleSubmit} className='box '>
+        <div className='box '>
           <PhonebookItem
             name={this.state.name}
             number={this.state.number}
@@ -69,8 +69,8 @@ export class App extends Component {
           <Contacts
             contacts={filtered}
             onDeleteContact={this.onDeleteContact} />
-        </form>
-      </div>
+        </div >
+      </div >
     );
   }
 }
